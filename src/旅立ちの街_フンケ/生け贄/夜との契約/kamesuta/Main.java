@@ -25,45 +25,45 @@ public class Main {
 					if (pick==0)
 						hasBlank = true;
 					if (pick==0||stablesum==-1)
-						xcheck: {
-							int skipped = 0;
+						ycheck: {
 							int sum = 0;
 							int zerocount = 0;
+							int sumcount = 0;
 							for (int iy = 0; iy<size; iy++) {
-								if (iy==y)
-									skipped++;
-								if (skipped>=2)
-									break xcheck;
 								final int current = array[iy][x];
-								if (current==0)
+								if (current==0) {
 									zerocount++;
-								else
+									if (zerocount>=2)
+										break ycheck;
+								} else {
 									sum += current;
+									sumcount++;
+								}
 							}
-							if (pick!=0&&stablesum==-1&&zerocount==0)
+							if (zerocount==0&&pick!=0&&stablesum==-1&&sumcount==size)
 								stablesum = sum;
-							else if (pick==0&&stablesum!=-1)
+							else if (zerocount==1&&pick==0&&stablesum!=-1&&sumcount==size-1)
 								pick = array[y][x] = stablesum-sum;
 						}
 					if (pick==0||stablesum==-1)
-						ycheck: {
-							int skipped = 0;
+						xcheck: {
 							int sum = 0;
 							int zerocount = 0;
+							int sumcount = 0;
 							for (int ix = 0; ix<size; ix++) {
-								if (ix==x)
-									skipped++;
-								if (skipped>=2)
-									break ycheck;
 								final int current = array[y][ix];
-								if (current==0)
+								if (current==0) {
 									zerocount++;
-								else
+									if (zerocount>=2)
+										break xcheck;
+								} else {
 									sum += current;
+									sumcount++;
+								}
 							}
-							if (pick!=0&&stablesum==-1&&zerocount==0)
+							if (zerocount==0&&pick!=0&&stablesum==-1&&sumcount==size)
 								stablesum = sum;
-							else if (pick==0&&stablesum!=-1)
+							else if (zerocount==1&&pick==0&&stablesum!=-1&&sumcount==size-1)
 								pick = array[y][x] = stablesum-sum;
 						}
 				}
