@@ -1,6 +1,10 @@
 package 旅立ちの街_フンケ.生け贄.夜との契約.kamesuta;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
 	public static void main(final String[] args) {
@@ -16,59 +20,62 @@ public class Main {
 		}
 		sc.close();
 
-		int stablesum = -1;
-		while (true) {
-			boolean hasBlank = false;
-			for (int y = 0; y<size; y++)
-				for (int x = 0; x<size; x++) {
-					int pick = array[y][x];
-					if (pick==0)
-						hasBlank = true;
-					if (pick==0||stablesum==-1)
-						ycheck: {
-							int sum = 0;
-							int zerocount = 0;
-							int sumcount = 0;
-							for (int iy = 0; iy<size; iy++) {
-								final int current = array[iy][x];
-								if (current==0) {
-									zerocount++;
-									if (zerocount>=2)
-										break ycheck;
-								} else {
-									sum += current;
-									sumcount++;
-								}
-							}
-							if (zerocount==0&&pick!=0&&stablesum==-1&&sumcount==size)
-								stablesum = sum;
-							else if (zerocount==1&&pick==0&&stablesum!=-1&&sumcount==size-1)
-								pick = array[y][x] = stablesum-sum;
-						}
-					if (pick==0||stablesum==-1)
-						xcheck: {
-							int sum = 0;
-							int zerocount = 0;
-							int sumcount = 0;
-							for (int ix = 0; ix<size; ix++) {
-								final int current = array[y][ix];
-								if (current==0) {
-									zerocount++;
-									if (zerocount>=2)
-										break xcheck;
-								} else {
-									sum += current;
-									sumcount++;
-								}
-							}
-							if (zerocount==0&&pick!=0&&stablesum==-1&&sumcount==size)
-								stablesum = sum;
-							else if (zerocount==1&&pick==0&&stablesum!=-1&&sumcount==size-1)
-								pick = array[y][x] = stablesum-sum;
-						}
+		int stablesum = 0;
+		stablesum: for (int y = 0; y<size; y++)
+			for (int x = 0; x<size; x++) {
+				check: {
+					int sum = 0;
+					for (int iy = 0; iy<size; iy++) {
+						final int current = array[iy][x];
+						if (current==0)
+							break check;
+						sum += current;
+					}
+					stablesum = sum;
+					break stablesum;
 				}
-			if (!hasBlank)
-				break;
+				check: {
+					int sum = 0;
+					for (int ix = 0; ix<size; ix++) {
+						final int current = array[y][ix];
+						if (current==0)
+							break check;
+						sum += current;
+					}
+					stablesum = sum;
+					break stablesum;
+				}
+			}
+
+		final Set<Integer> all = new HashSet<>();
+		final Set<int[]> unknownposes = new HashSet<>();
+		for (int i = 1; i<=size*size; i++)
+			all.add(i);
+
+		for (int y = 0; y<size; y++)
+			for (int x = 0; x<size; x++) {
+				final int num = array[y][x];
+				if (num!=0)
+					all.remove(num);
+				else
+					unknownposes.add(new int[] { x, y });
+			}
+
+		check: {
+			final List<int[]> listPos = new ArrayList<>(unknownposes);
+			final int[] posA = listPos.get(0);
+			final int[] posB = listPos.get(1);
+			final List<Integer> listAll = new ArrayList<>(all);
+			final int valA = listAll.get(0);
+			final int valB = listAll.get(1);
+			array[posA[1]][posA[0]] = valA;
+			array[posB[1]][posB[0]] = valB;
+			if (check(size, stablesum, array))
+				break check;
+			array[posA[1]][posA[0]] = valB;
+			array[posB[1]][posB[0]] = valA;
+			if (check(size, stablesum, array))
+				break check;
 		}
 
 		for (int w = 0; w<size; w++) {
@@ -80,5 +87,23 @@ public class Main {
 			}
 			System.out.println(sb);
 		}
+	}
+
+	private static boolean check(final int size, final int stablesum, final int[][] array) {
+		for (int y = 0; y<size; y++) {
+			int sum = 0;
+			for (int x = 0; x<size; x++)
+				sum += array[y][x];
+			if (sum!=stablesum)
+				return false;
+		}
+		for (int x = 0; x<size; x++) {
+			int sum = 0;
+			for (int y = 0; y<size; y++)
+				sum += array[y][x];
+			if (sum!=stablesum)
+				return false;
+		}
+		return true;
 	}
 }
