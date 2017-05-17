@@ -1,4 +1,4 @@
-package tabidachimachi_funke.shoukannosyo.you;
+package 旅立ちの街_フンケ.召喚の書.妖.sjcl;
 
 import java.util.Scanner;
 

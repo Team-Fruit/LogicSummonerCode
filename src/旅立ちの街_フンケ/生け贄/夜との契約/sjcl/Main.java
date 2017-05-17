@@ -1,4 +1,4 @@
-package tabidachimachi_funke.ikenie.yotonokeiyaku;
+package 旅立ちの街_フンケ.生け贄.夜との契約.sjcl;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package tabidachimachi_funke.shoukannosyo.tsubasa;
+package 旅立ちの街_フンケ.召喚の書.翼.sjcl;
 
 import java.util.LinkedList;
 import java.util.Scanner;
