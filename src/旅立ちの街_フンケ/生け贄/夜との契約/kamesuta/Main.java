@@ -76,6 +76,7 @@ public class Main {
 			array[posB[1]][posB[0]] = valA;
 			if (check(size, stablesum, array))
 				break check;
+			throw new IllegalStateException();
 		}
 
 		for (int w = 0; w<size; w++) {
@@ -101,6 +102,20 @@ public class Main {
 			int sum = 0;
 			for (int y = 0; y<size; y++)
 				sum += array[y][x];
+			if (sum!=stablesum)
+				return false;
+		}
+		{
+			int sum = 0;
+			for (int i = 0; i<size; i++)
+				sum += array[i][i];
+			if (sum!=stablesum)
+				return false;
+		}
+		{
+			int sum = 0;
+			for (int i = 0; i<size; i++)
+				sum += array[size-i-1][i];
 			if (sum!=stablesum)
 				return false;
 		}
