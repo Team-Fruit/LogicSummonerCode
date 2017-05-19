@@ -14,7 +14,7 @@ let isNotComplete = function (element, index, array) {
     return element === 0;
 };
 
-let getWidgh = function (y) {
+let getWidth = function (y) {
     return magic[y];
 };
 
@@ -26,33 +26,21 @@ let getHeight = function (x) {
 };
 
 let getSlant = function (x) {
-    var slant;
-    switch (x) {
-        case 0:
-            slant = function () {
-                let array = [];
-                for (var i = 0; i < size; i++)
-                    array.push(magic[i][i]);
-                return array;
-            };
-            break;
-        case size - 1:
-            slant = function () {
-                let array = [];
-                var h = size - 1;
-                for (var i = 0; i < size; i++) {
-                    array.push(magic[h][i]);
-                    h--;
-                }
-                return array;
-            };
+    let array = [];
+    var h = size - 1;
+    for (var i = 0; i < size; i++) {
+        if (x === 0)
+          array.push(magic[i][i]);
+        else if (x === size -1)
+          array.push(magic[h][i]);
+        h--;
     }
-    return slant();
+    return array;
 };
 
 let getSum = function () {
     for (var i = 0; i < size; i++) {
-        let w = getWidgh(i);
+        let w = getWidth(i);
         if (!w.some(isNotComplete))
             return getArraySum(w);
         let h = getHeight(i);
