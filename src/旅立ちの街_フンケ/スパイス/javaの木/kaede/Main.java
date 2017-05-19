@@ -1,5 +1,6 @@
+package 旅立ちの街_フンケ.スパイス.javaの木.kaede;
 import java.util.*;
-public class Tree_of_Java {
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 

@@ -1,5 +1,6 @@
+package 旅立ちの街_フンケ.スパイス.pythonリング.kaede;
 import java.util.*;
-public class Ring_of_Python {
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
