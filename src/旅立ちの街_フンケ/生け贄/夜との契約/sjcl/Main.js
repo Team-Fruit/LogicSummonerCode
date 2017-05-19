@@ -6,27 +6,27 @@ var magic = [];
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
     process.stdin.on('data', function (chunk) {
-        // let array = chunk.toString().split("\n");
-        // size = +array[0];
-        // for (var i = 1; i < array.length-1; i++)
-        //     putLine(array[i]);
-        // fix();
-        // magic.forEach(function(element) {
-        //     console.log(element.join(' '));
-        // });
-        // reset();
+        let array = chunk.toString().split("\n");
+        size = +array[0];
+        for (var i = 1; i < array.length-1; i++)
+            putLine(array[i]);
+        fix();
+        magic.forEach(function(element) {
+            console.log(element.join(' '));
+        });
+        reset();
         // デバッグ用
-        if (size !== undefined) {
-            putLine(chunk.toString());
-            if (size == magic.length) {
-                fix();
-                magic.forEach(function(element) {
-                    console.log(element.join(' '));
-                });
-                reset();
-            }
-        } else
-            size = +chunk.toString();
+//         if (size !== undefined) {
+//             putLine(chunk.toString());
+//             if (size == magic.length) {
+//                 fix();
+//                 magic.forEach(function(element) {
+//                     console.log(element.join(' '));
+//                 });
+//                 reset();
+//             }
+//         } else
+//             size = +chunk.toString();
     });
 })();
 
@@ -72,6 +72,33 @@ function getHeight(x) {
     return array;
 }
 
+function getSlant(x) {
+    var slant;
+    switch (x) {
+        case 0:
+            slant = function() {
+                let array = [];
+                for (var i = 0; i < size; i++)
+                    array.push(magic[i][i]);
+                return array;
+            };
+            break;
+        case size:
+            slant = function() {
+                let array = [];
+                for (var i = size; i >= 0; i--)
+                    array.push(magic[i][i]);
+                return array;
+            };
+            break;
+        default:
+            slant = function() {
+                return [];
+            }
+    }
+    return slant();
+}
+
 function getZeroCount(array) {
     var c = 0;
     array.forEach(function(element) {
@@ -95,6 +122,9 @@ function fix() {
                         let h = getHeight(index2);
                         if (getZeroCount(h) <= 1)
                             return sum - getArraySum(h);
+                        let s = getSlant(index1);
+                        if (getZeroCount(s) <= 1)
+                            return sum - getArraySum(s);
                         return;
                     };
                     var num = fill();
