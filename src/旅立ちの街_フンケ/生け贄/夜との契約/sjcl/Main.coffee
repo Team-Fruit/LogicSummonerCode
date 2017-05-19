@@ -12,7 +12,7 @@ getArraySum = (array) ->
 isNotComplete = (element, index, array) ->
   element == 0
 
-getWidgh = (y) ->
+getWidth = (y) ->
   magic[y]
 
 getHeight = (x) ->
@@ -24,32 +24,22 @@ getHeight = (x) ->
   array
 
 getSlant = (x) ->
-  slant = undefined
-  switch x
-    when 0
-      slant = ->
-        array = []
-        i = 0
-        while i < size
-          array.push magic[i][i]
-          i++
-        array
-    when size - 1
-      slant = ->
-        array = []
-        h = size - 1
-        i = 0
-        while i < size
-          array.push magic[h][i]
-          h--
-          i++
-        array
-  slant()
+  array = []
+  h = size - 1
+  i = 0
+  while i < size
+    if x == 0
+      array.push magic[i][i]
+    else if x == size - 1
+      array.push magic[h][i]
+    h--
+    i++
+  array
 
 getSum = ->
   i = 0
   while i < size
-    w = getWidgh(i)
+    w = getWidth(i)
     if !w.some(isNotComplete)
       return getArraySum(w)
     h = getHeight(i)
