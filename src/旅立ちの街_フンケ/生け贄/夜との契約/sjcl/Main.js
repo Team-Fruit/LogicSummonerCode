@@ -16,17 +16,17 @@ var magic = [];
         });
         reset();
         // デバッグ用
-//         if (size !== undefined) {
-//             putLine(chunk.toString());
-//             if (size == magic.length) {
-//                 fix();
-//                 magic.forEach(function(element) {
-//                     console.log(element.join(' '));
-//                 });
-//                 reset();
-//             }
-//         } else
-//             size = +chunk.toString();
+        // if (size !== undefined) {
+        //     putLine(chunk.toString());
+        //     if (size == magic.length) {
+        //         fix();
+        //         magic.forEach(function(element) {
+        //             console.log(element.join(' '));
+        //         });
+        //         reset();
+        //     }
+        // } else
+        //     size = +chunk.toString();
     });
 })();
 
@@ -47,6 +47,12 @@ function getSum() {
         if (!h.some(isNotComplete))
             return getArraySum(h);
     }
+    let ls = getSlant(0);
+    if (!ls.some(isNotComplete))
+        return getArraySum(ls);
+    let rs = getSlant(size-1);
+    if (!rs.some(isNotComplete))
+        return getArraySum(rs);
 }
 
 function isNotComplete(element, index, array) {
@@ -83,18 +89,16 @@ function getSlant(x) {
                 return array;
             };
             break;
-        case size:
+        case size-1:
             slant = function() {
                 let array = [];
-                for (var i = size; i >= 0; i--)
-                    array.push(magic[i][i]);
+                var h = size-1;
+                for (var i = 0; i < size; i++) {
+                    array.push(magic[h][i]);
+                    h--;
+                }
                 return array;
             };
-            break;
-        default:
-            slant = function() {
-                return [];
-            }
     }
     return slant();
 }
@@ -122,9 +126,6 @@ function fix() {
                         let h = getHeight(index2);
                         if (getZeroCount(h) <= 1)
                             return sum - getArraySum(h);
-                        let s = getSlant(index1);
-                        if (getZeroCount(s) <= 1)
-                            return sum - getArraySum(s);
                         return;
                     };
                     var num = fill();
