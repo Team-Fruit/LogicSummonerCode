@@ -6,27 +6,27 @@ var magic = [];
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
     process.stdin.on('data', function (chunk) {
-        let array = chunk.toString().split("\n");
-        size = +array[0];
-        for (var i = 1; i < array.length-1; i++)
-            putLine(array[i]);
-        fix();
-        magic.forEach(function(element) {
-            console.log(element.join(' '));
-        });
-        reset();
+        // let array = chunk.toString().split("\n");
+        // size = +array[0];
+        // for (var i = 1; i < array.length-1; i++)
+        //     putLine(array[i]);
+        // fix();
+        // magic.forEach(function(element) {
+        //     console.log(element.join(' '));
+        // });
+        // reset();
         // デバッグ用
-        // if (size !== undefined) {
-        //     putLine(chunk.toString());
-        //     if (size == magic.length) {
-        //         fix();
-        //         magic.forEach(function(element) {
-        //             console.log(element.join(' '));
-        //         });
-        //         reset();
-        //     }
-        // } else
-        //     size = +chunk.toString();
+        if (size !== undefined) {
+            putLine(chunk.toString());
+            if (size == magic.length) {
+                fix();
+                magic.forEach(function(element) {
+                    console.log(element.join(' '));
+                });
+                reset();
+            }
+        } else
+            size = +chunk.toString();
     });
 })();
 
@@ -89,14 +89,15 @@ function fix() {
         magic.forEach(function(element1, index1) {
             element1.forEach(function(element2, index2) {
                 if (element2 === 0) {
-                    var num;
-                    if (getZeroCount(element1) <= 1)
-                        num = sum - getArraySum(element1);
-                    else {
+                    let fill = function() {
+                        if (getZeroCount(element1) <= 1)
+                            return sum - getArraySum(element1);
                         let h = getHeight(index2);
                         if (getZeroCount(h) <= 1)
-                            num = sum - getArraySum(h);
-                    }
+                            return sum - getArraySum(h);
+                        return;
+                    };
+                    var num = fill();
                     if (num !== undefined) {
                         magic[index1][index2] = num;
                         if (!b)
