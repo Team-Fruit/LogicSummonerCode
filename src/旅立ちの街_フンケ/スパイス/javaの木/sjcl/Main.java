@@ -18,7 +18,7 @@ public class Main {
 			final int price = sc.nextInt();
 			map.put((float) price/attack, price);
 		}
-		System.out.println(map.entrySet().iterator().next().getValue());
+		System.out.println(map.values().iterator().next());
 	}
 
 }
