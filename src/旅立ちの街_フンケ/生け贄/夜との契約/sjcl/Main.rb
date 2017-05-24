@@ -1,4 +1,4 @@
-def getHeight(x)
+def get_height(x)
     array = []
     for i in 0..@size-1 do
         array << @magic[i][x]
@@ -6,7 +6,7 @@ def getHeight(x)
     return array
 end
 
-def getSlant(x)
+def get_slant(x)
     array = []
     h = @size-1
     for i in 0..@size-1 do
@@ -20,22 +20,22 @@ def getSlant(x)
     return array
 end
 
-def getSum
+def get_sum
     for i in 0..@size-1 do
         w = @magic[i]
         if !w.include?(0) then
           return w.inject(:+)
         end
-        h = getHeight(i)
+        h = get_height(i)
         if !h.include?(0) then
             return h.inject(:+)
         end
     end
-    ls = getSlant(0)
+    ls = get_slant(0)
     if !ls.include?(0) then
         return ls.inject(:+)
     end
-    rs = getSlant(@size-1)
+    rs = get_slant(@size-1)
     if !rs.include?(0) then
         return rs.inject(:+)
     end
@@ -45,7 +45,7 @@ end
 @magic = $stdin.read.split(?\n).map(&:split).map! do |line|
     line.map!(&:to_i)
 end
-sum = getSum
+sum = get_sum
 skipped = false
 loop do
     b = false
@@ -56,7 +56,7 @@ loop do
                 if @magic[i1].count(0) <= 1 then
                     n = sum - @magic[i1].inject(:+)
                 else
-                    h = getHeight(i2)
+                    h = get_height(i2)
                     if h.count(0) <= 1 then
                         n = sum - h.inject(:+)
                     end
