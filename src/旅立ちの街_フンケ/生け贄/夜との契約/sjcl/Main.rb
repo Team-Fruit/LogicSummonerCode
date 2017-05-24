@@ -1,11 +1,3 @@
-def height(x)
-    array = []
-    for i in 0..@size-1 do
-        array << @magic[i][x]
-    end
-    return array
-end
-
 def slant(x)
     array = []
     h = @size-1
@@ -26,7 +18,7 @@ def sum
         if !w.include?(0) then
           return w.inject(:+)
         end
-        h = height(i)
+        h = @magic.transpose[i]
         if !h.include?(0) then
             return h.inject(:+)
         end
@@ -56,7 +48,7 @@ loop do
                 if @magic[i1].count(0) <= 1 then
                     n = sum - @magic[i1].inject(:+)
                 else
-                    h = height(i2)
+                    h = @magic.transpose[i2]
                     if h.count(0) <= 1 then
                         n = sum - h.inject(:+)
                     end
