@@ -1,3 +1,8 @@
+@size = $stdin.readline.to_i
+@magic = $stdin.read.split(?\n).map(&:split).map! do |line|
+    line.map!(&:to_i)
+end
+
 def slant(x)
     array = []
     h = @size-1
@@ -33,10 +38,6 @@ def sum
     end
 end
 
-@size = $stdin.readline.to_i
-@magic = $stdin.read.split(?\n).map(&:split).map! do |line|
-    line.map!(&:to_i)
-end
 sum = sum()
 skipped = false
 loop do
