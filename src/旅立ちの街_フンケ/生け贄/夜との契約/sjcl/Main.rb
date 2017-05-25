@@ -66,7 +66,7 @@ loop do
             end
         end
     end
-    break skipped
+    break !skipped
 end
 @magic.each do |line|
     puts line.join(" ")
