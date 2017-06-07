@@ -43,20 +43,20 @@ sum = sum()
 skipped = false
 loop do
     b = false
-    for i1 in 0..@magic.length-1 do
-        for i2 in 0..@magic[i1].length-1 do
-            if @magic[i1][i2] == 0
+    for i in 0..@magic.length-1 do
+        for j in 0..@magic[i].length-1 do
+            if @magic[i][j] == 0
                 n = -1
-                if @magic[i1].count(0) <= 1
-                    n = sum - @magic[i1].inject(:+)
+                if @magic[i].count(0) <= 1
+                    n = sum - @magic[i].inject(:+)
                 else
-                    h = @magic.transpose[i2]
+                    h = @magic.transpose[j]
                     if h.count(0) <= 1
                         n = sum - h.inject(:+)
                     end
                 end
                 if n >= 0
-                    @magic[i1][i2] = n
+                    @magic[i][j] = n
                     skipped = true unless b
                 else
                     b = true
