@@ -1,5 +1,5 @@
 @size = $stdin.readline.to_i
-@magic = $stdin.read.split(?\n).map(&:split).map! do |line|
+@magic = $stdin.read.split(?\n).map!(&:split).map! do |line|
     line.map!(&:to_i)
 end
 
@@ -21,20 +21,20 @@ end
 def sum
     for i in 0..@size-1 do
         w = @magic[i]
-        if !w.include?(0)
+        unless w.include?(0)
           return w.inject(:+)
         end
         h = @magic.transpose[i]
-        if !h.include?(0)
+        unless h.include?(0)
             return h.inject(:+)
         end
     end
     ls = slant(0)
-    if !ls.include?(0)
+    unless ls.include?(0)
         return ls.inject(:+)
     end
     rs = slant(@size-1)
-    if !rs.include?(0)
+    unless rs.include?(0)
         return rs.inject(:+)
     end
 end
@@ -57,9 +57,7 @@ loop do
                 end
                 if n >= 0
                     @magic[i1][i2] = n
-                    if !b
-                        skipped = true
-                    end
+                    skipped = true unless b
                 else
                     b = true
                     skipped = true
