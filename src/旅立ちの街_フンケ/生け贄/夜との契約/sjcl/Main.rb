@@ -31,32 +31,35 @@ def sum
     return rs.inject(:+) unless rs.include?(0)
 end
 
-sum = sum()
-skipped = false
-loop do
-    b = false
-    @magic.length.times do |i|
-        @magic[i].length.times do |j|
-            if @magic[i][j] == 0
-                n = -1
-                if @magic[i].count(0) <= 1
-                    n = sum - @magic[i].inject(:+)
-                else
-                    h = @magic.transpose[j]
-                    n = sum - h.inject(:+) if h.count(0) <= 1
-                end
-                if n >= 0
-                    @magic[i][j] = n
-                    skipped = true unless b
-                else
-                    b = true
-                    skipped = true
+def fill!(size, magic, sum)
+    skipped = false
+    loop do
+        b = false
+        @magic.length.times do |i|
+            @magic[i].length.times do |j|
+                if @magic[i][j] == 0
+                    n = -1
+                    if @magic[i].count(0) <= 1
+                        n = sum - @magic[i].inject(:+)
+                    else
+                        h = @magic.transpose[j]
+                        n = sum - h.inject(:+) if h.count(0) <= 1
+                    end
+                    if n >= 0
+                        @magic[i][j] = n
+                        skipped = true unless b
+                    else
+                        b = true
+                        skipped = true
+                    end
                 end
             end
         end
+        break if skipped
     end
-    break if skipped
 end
+
+fill!(@size, @magic, sum())
 @magic.each do |line|
     puts line.join(" ")
 end
